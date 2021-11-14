@@ -1,7 +1,5 @@
 #include "headers.h"
 
-//Recebe endereço da pilha.
-//temp->ant = *end_em_lista_pilha; é o topo da pilha.
 void empilha(elpilha** pilha, lista_de_pilhas** lista){
 	int valor_temp;
 	elpilha* temp;
@@ -12,22 +10,33 @@ void empilha(elpilha** pilha, lista_de_pilhas** lista){
 		return;
 	}
 	
-	if((*lista)->pilha == NULL){
+	if((*lista)->pilha == NULL)
 		temp->ant = NULL;
+	else temp->ant = *pilha;
+	
+	printf("Digite o valor.");
+	scanf("%d", &valor_temp);
+	temp->valor = valor_temp;
 
-		printf("Digite o valor.");
-		scanf("%d", &valor_temp);
-		temp->valor = valor_temp;
+	(*lista)->pilha = temp;
+}
 
-	} else {
-		temp->ant = *pilha;
+void empilhaResultadoOperacao(elpilha** pilha, lista_de_pilhas** lista, float resultado){
+	int valor_temp;
+	elpilha* temp;
+	temp = (elpilha*)malloc(sizeof(elpilha));
 
-		printf("Digite o valor.");
-		scanf("%d", &valor_temp);
-		temp->valor = valor_temp;
+	if((*lista)->id == 0){
+		printf("ID 0 é proibido.\n");
+		return;
 	}
+	
+	if((*lista)->pilha == NULL)
+		temp->ant = NULL;
+	else temp->ant = *pilha;
+	
+	temp->valor = resultado;
 
-	//*pilha = temp;
 	(*lista)->pilha = temp;
 }
 
@@ -106,7 +115,7 @@ int operarPilha(char operador, elpilha** pilha, lista_de_pilhas** noLista) {
 		resultado = (*pilha)->valor + (*pilha)->ant->valor;
 		desempilha(pilha, noLista);
 		desempilha(pilha, noLista);
-		empilha(pilha, noLista);
+		empilhaResultadoOperacao(pilha, noLista, resultado);
 		(*pilha)->valor = resultado;
 		return 1;
 	} 
@@ -114,7 +123,7 @@ int operarPilha(char operador, elpilha** pilha, lista_de_pilhas** noLista) {
 		resultado = (*pilha)->valor - (*pilha)->ant->valor;
 		desempilha(pilha, noLista);
 		desempilha(pilha, noLista);
-		empilha(pilha, noLista);
+		empilhaResultadoOperacao(pilha, noLista, resultado);
 		(*pilha)->valor = resultado;
 		return 1;
 	}
@@ -122,7 +131,7 @@ int operarPilha(char operador, elpilha** pilha, lista_de_pilhas** noLista) {
 		resultado = (*pilha)->valor * (*pilha)->ant->valor;
 		desempilha(pilha, noLista);
 		desempilha(pilha, noLista);
-		empilha(pilha, noLista);
+		empilhaResultadoOperacao(pilha, noLista, resultado);
 		(*pilha)->valor = resultado;
 		return 1;
 	}
@@ -130,14 +139,19 @@ int operarPilha(char operador, elpilha** pilha, lista_de_pilhas** noLista) {
 		resultado = (*pilha)->valor / (*pilha)->ant->valor;
 		desempilha(pilha, noLista);
 		desempilha(pilha, noLista);
-		empilha(pilha, noLista);
+		empilhaResultadoOperacao(pilha, noLista, resultado);
 		(*pilha)->valor = resultado;
 		return 1;
 	} 
 	else {
 		printf("Operação inválida.\n");
-		return 2;
+		return 0;
 	}
 
 
+}
+
+void reduzirPilha(char operador, elpilha** pilha, lista_de_pilhas** noLista) {
+	while( operarPilha(operador, pilha, noLista) ){
+	}
 }

@@ -1,6 +1,8 @@
 #include "headers.h"
 
 int main(){
+	char operador;
+
 	lista_de_pilhas* noListaTemp = NULL;
 	
 	//Lista aponta pro nó ID 0.
@@ -21,11 +23,10 @@ int main(){
 		printf("6  - Listar nós de uma pilha.\n");
 
 		printf("7  - Operações aritméticas.\n");
+		printf("8  - Reduzir pilhas.\n");
 		
 		
 		/*
-		
-		printf("7  - Reduzir.\n");
 		printf("8  - Esvaziar.\n");
 		printf("9  - Mover topo de pilha A a B.\n");
 		printf("10 - ID das pilhas: crescente.\n");
@@ -41,7 +42,9 @@ int main(){
 			case 5: noListaTemp = lista; if(encontrarNoLista(&noListaTemp)) desempilha(&noListaTemp->pilha, &noListaTemp); else printf("ID não encontrado.\n"); break;
 			case 6: noListaTemp = lista; if(encontrarNoLista(&noListaTemp)) listarNosPilha(&(noListaTemp->pilha)); else printf("ID não encontrado.\n"); break;
 			
-			case 7: noListaTemp = lista; if(encontrarNoLista(&noListaTemp)) printf("Digite o operador (+ - * /)\n"); char operador; scanf(" %c", &operador); operarPilha(operador, &noListaTemp->pilha, &noListaTemp); break;
+			case 7: noListaTemp = lista; if(encontrarNoLista(&noListaTemp)) printf("Digite o operador (+ - * /)\n"); scanf(" %c", &operador); operarPilha(operador, &noListaTemp->pilha, &noListaTemp); break;
+
+			case 8: noListaTemp = lista; if(encontrarNoLista(&noListaTemp)) printf("Digite o operador (+ - * /)\n"); scanf(" %c", &operador); reduzirPilha(operador, &noListaTemp->pilha, &noListaTemp); break;
 
 		}
 
