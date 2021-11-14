@@ -1,7 +1,3 @@
-/*
-O que funciona: a lista é criada e dá pra colocar uma pilha infinita dentro dela.
-*/
-
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -10,41 +6,26 @@ typedef struct elpilha_ {
 	struct elpilha_* ant;
 } elpilha;
 
-void empilha(elpilha** top)
-{
-	printf("\nEmpilha\n");
+//Recebe endereço da pilha.
+void empilha(elpilha** top){
 	elpilha* temp;
 	temp = (elpilha*) malloc (sizeof(elpilha));
-	printf("End. temp (objeto) %p\n", temp);
-	printf("End. top %p\n", top);
-	printf("End. *top %p\n", *top);
-
-	//top é onde tá o endereço da pilha em si.
 	temp->ant = *top;
-	printf("End. temp_ant %p\n", temp->ant);
-
 	*top = temp;
-	printf("End. temp %p\n", temp);
-	printf("End. *top %p\n\n", *top);
 }
 
 float desempilha(elpilha** top){
-	puts("\nDesempilha\n");
-	elpilha* temp;
-	float x;
-	printf("End. temp %p\n", temp);
-	x = (*top)->valor;
-	printf("(*top)->valor = %f\n", (*top)->valor);
-	temp = *top;
-	printf("End. top %p\n", top);
-	printf("End. *top %p\n", *top);
-	//printf("desempilha %p\n", *top);
-	//printf("desempilha %p\n", (*top)->ant);
-	*top = (*top)->ant;
-	printf("End. (*top)->ant %p\n", (*top)->ant);
-	printf("End. *top %p\n", *top);
-	free(temp);
-	return x;
+	if((*top)->ant != NULL){
+		elpilha* temp;
+		float x;
+		x = (*top)->valor;
+		temp = *top;
+		*top = (*top)->ant;
+		free(temp);
+		return x;
+	}
+	
+		printf("Underflow.\n");
 }
 
 typedef struct lista_de_pilhas_{
@@ -54,83 +35,71 @@ typedef struct lista_de_pilhas_{
 } lista_de_pilhas;
 
 void addLista(lista_de_pilhas** lista){
-
-	(*lista)->prox = (lista_de_pilhas*)malloc(sizeof(lista_de_pilhas));
+	lista_de_pilhas* backup = *lista;
+	for( ; (*lista)->prox != NULL; (*lista) = (*lista)->prox);
+	lista_de_pilhas* temp = (lista_de_pilhas*)malloc(sizeof(lista_de_pilhas));
+	int id = (*lista)->id;
+	temp->id = ++id;
+	temp->prox = NULL;
+	(*lista)->prox = temp;
+	(*lista) = backup;
 }
 
 int listaVazia(lista_de_pilhas** lista){
 	return (*lista)->prox == NULL;
 }
 
+void listar(lista_de_pilhas** lista){
+	lista_de_pilhas* backup = *lista;
+	for( ; (*lista)->prox != NULL; (*lista) = (*lista)->prox)
+	printf("Lista n°: %d\n", (*lista)->id);
+	(*lista) = backup;
+}
+
+void remover(lista_de_pilhas** lista){
+	printf("Digite ID da pilha.");
+	int id_temp;
+	scanf("%d", &id_temp);
+
+	lista_de_pilhas* backup = *lista;
+	lista_de_pilhas* anterior;
+
+	for( ; (*lista)->id != id_temp; (*lista) = (*lista)->prox){
+		anterior = *lista;
+	}
+
+	anterior->prox = (*lista)->prox;
+	free((*lista));
+	(*lista) = backup;
+}
+
+void encontrar(lista_de_pilhas** lista){
+	printf("Digite ID da pilha.");
+	int id_temp;
+	scanf("%d", &id_temp);
+
+	lista_de_pilhas* backup = *lista;
+	lista_de_pilhas* anterior;
+
+	for( ; (*lista)->id != id_temp; (*lista) = (*lista)->prox);
+
+	
+}
+
+
 int main(){
-		printf("\nMain\n");
-	//Não esqueça que struct pega um monte de endereço pra caber tudo.
+	lista_de_pilhas* temp = NULL;
 	lista_de_pilhas* lista_inicio = (lista_de_pilhas*)malloc(sizeof(lista_de_pilhas));
-	//printf("%p\n", &lista_inicio->pilha);
-	printf("End. &lista_inicio (ptr) %p\n", &lista_inicio);
-	printf("End. lista_inicio (objeto) %p\n", lista_inicio);
-	//Pilha é um ponteiro. Por enquanto aponta para NULL.
-	printf("End. lista_inicio->pilha %p\n", lista_inicio->pilha);
-	//Onde começa a pilha do struct na memória.
-	printf("End. &lista_inicio->pilha %p\n", &lista_inicio->pilha);
-	//Ponteiro p/ próxima lista.
-	printf("End. lista_inicio->prox %p\n", lista_inicio->prox);
-	//Endereço deste ponteiro prox.
-	printf("End. &lista_inicio->prox %p\n", &lista_inicio->prox);
-	//printf("End. lista_inicio->pilha->ant %p\n", lista_inicio->pilha->ant);
-	
-	//lista_de_pilhas* lista_atual = NULL;
-	//Nulo da LISTA
-	//lista_inicio->prox = NULL;
-	//Nulo da primeira PILHA
+	lista_inicio->prox = NULL;
+	lista_inicio->id = 1;
 
-	//Aqui dá erro de core dumped porque não existe objeto na memória sendo referenciado pelo PONTEIRO que é ant.
-	//lista_inicio->pilha->ant = NULL;
-
-	//if(listaVazia(&lista_inicio)) lista_atual = lista_inicio;
-
+	/*REFERÊNCIA
 	empilha(&lista_inicio->pilha);
-	printf("\nMain após empilha 1\n");
-	printf("End. &lista_inicio (ptr) %p\n", &lista_inicio);
-	printf("End. lista_inicio (objeto) %p\n", lista_inicio);
-	printf("End. lista_inicio->pilha %p\n", lista_inicio->pilha);
-	printf("End. &lista_inicio->pilha %p\n", &lista_inicio->pilha);
-	printf("End. lista_inicio->prox %p\n", lista_inicio->prox);
-	printf("End. &lista_inicio->prox %p\n", &lista_inicio->prox);
-  printf("End. lista_inicio->pilha->ant %p\n", lista_inicio->pilha->ant);
 	lista_inicio->pilha->valor = 16.0;	
-	printf("Valor no topo = %f\n", lista_inicio->pilha->valor);
-
-	empilha(&lista_inicio->pilha);
-	printf("\nMain após empilha 2\n");
-	printf("End. &lista_inicio (ptr) %p\n", &lista_inicio);
-	printf("End. lista_inicio (objeto) %p\n", lista_inicio);
-	printf("End. lista_inicio->pilha %p\n", lista_inicio->pilha);
-	printf("End. &lista_inicio->pilha %p\n", &lista_inicio->pilha);
-	printf("End. lista_inicio->prox %p\n", lista_inicio->prox);
-	printf("End. &lista_inicio->prox %p\n", &lista_inicio->prox);
-  printf("End. lista_inicio->pilha->ant %p\n", lista_inicio->pilha->ant);
-	lista_inicio->pilha->valor = 33.0;	
-	printf("Valor no topo = %f\n", lista_inicio->pilha->valor);
-
 	desempilha(&lista_inicio->pilha);
-
-	printf("Valor no topo ao desempilhar = %f\n", lista_inicio->pilha->valor);
-
-	empilha(&lista_inicio->pilha);
-	lista_inicio->pilha->valor = 99.0;
-	empilha(&lista_inicio->pilha);
-	lista_inicio->pilha->valor = 66.0;
-	empilha(&lista_inicio->pilha);
-	lista_inicio->pilha->valor = 24.0;
-
-	printf("Valor no topo = %f\n", lista_inicio->pilha->valor);
-	desempilha(&lista_inicio->pilha);
-	desempilha(&lista_inicio->pilha);
-	printf("Valor no topo = %f\n", lista_inicio->pilha->valor);	
+	printf("%f\n", lista_inicio->pilha->valor);*/
 	
-	/*int menu;
-
+	int menu;
 	do{
 		printf("1  - Criar.\n");
 		printf("2  - Listar.\n");
@@ -146,5 +115,16 @@ int main(){
 		printf("12 - Salvar em arquivo.\n");
 		printf("13 - Carregar de arquivo.\n");
 		scanf("%d", &menu);
-	}while(menu > 0 && menu <  14);*/
+
+		switch(menu){
+			case 1: addLista(&lista_inicio); break;
+			case 2: listar(&lista_inicio); break;
+			case 3: remover(&lista_inicio); break;
+			case 4: empilha(&lista_inicio->pilha); break;
+		}
+
+
+	}while(menu > 0 && menu <  14);
+
+
 }
