@@ -28,30 +28,21 @@ float desempilha(elpilha** top){
 }
 
 int main(){
+	elpilha** lista = (elpilha**)malloc(sizeof(elpilha)*10);
+	for(int i = 0; i<10; i++) lista[i] = NULL;
+	empilha(&lista[0]);
+	lista[0]->valor = 18.3;
+	printf("%f\n", lista[0]->valor);
+	printf("%p\n", lista[0]);
+	printf("%p\n", lista[0]->ant);
+	empilha(&lista[0]);
+	lista[0]->valor = 33.3;
+	printf("%f\n", lista[0]->valor);
+	printf("%p\n", lista[0]->ant);
+	//Saber se lista tá vazia: lista[0] == NULL. Tem que apontar tudo pra null ao criar. Ao remover o último elemento, apontar sua lista para NULL.
+	
 	//top sempre aponta pro elemento do topo.
 	elpilha* top = (elpilha*)malloc(sizeof(elpilha));
 	top->valor = 15.6;
 	top->ant = NULL;
-	
-	empilha(&top);
-	top->valor = 17.3;
-	empilha(&top);
-	top->valor = 199.3;
-	empilha(&top);
-	top->valor = 33.3;
-
-	printf("%f\n", top->valor);
-	float t = desempilha(&top);
-	printf("%f\n", t);
-	printf("%f\n", top->valor);
-
-	printf("%f\n", top->valor);
-	t = desempilha(&top);
-	printf("%f\n", t);
-	printf("%f\n", top->valor);
-
-	printf("%f\n", top->valor);
-	t = desempilha(&top);
-	printf("%f\n", t);
-	printf("%f\n", top->valor);
 }
