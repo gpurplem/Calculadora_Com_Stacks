@@ -15,6 +15,6 @@ int encontrarNoLista(lista_de_pilhas** lista);
 void empilha(elpilha** end_em_lista_pilha, lista_de_pilhas** lista);
 float desempilha(elpilha** end_em_lista_pilha, lista_de_pilhas** lista);
 void listarNosPilha(elpilha** lista);
-
+int operarPilha(char operador, elpilha** pilha, lista_de_pilhas** noListaTemp);
 
 #endif

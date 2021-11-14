@@ -2,10 +2,15 @@
 
 //Recebe endereço da pilha.
 //temp->ant = *end_em_lista_pilha; é o topo da pilha.
-void empilha(elpilha** end_em_lista_pilha, lista_de_pilhas** lista){
+void empilha(elpilha** pilha, lista_de_pilhas** lista){
 	int valor_temp;
 	elpilha* temp;
 	temp = (elpilha*)malloc(sizeof(elpilha));
+
+	if((*lista)->id == 0){
+		printf("ID 0 é proibido.\n");
+		return;
+	}
 	
 	if((*lista)->pilha == NULL){
 		temp->ant = NULL;
@@ -15,14 +20,14 @@ void empilha(elpilha** end_em_lista_pilha, lista_de_pilhas** lista){
 		temp->valor = valor_temp;
 
 	} else {
-		temp->ant = *end_em_lista_pilha;
+		temp->ant = *pilha;
 
 		printf("Digite o valor.");
 		scanf("%d", &valor_temp);
 		temp->valor = valor_temp;
 	}
 
-	//*end_em_lista_pilha = temp;
+	//*pilha = temp;
 	(*lista)->pilha = temp;
 }
 
@@ -31,6 +36,11 @@ void empilha(elpilha** end_em_lista_pilha, lista_de_pilhas** lista){
 //Se ao remover uma pilha, seu endereço for o mesmo de (*lista)->pilha, quer dizer que é o último elemento! aí dá free em (*lista)->pilha, e sabemos que ela está vazia.
 //Necessariamente se for NULL em ant, é o último elemento.
 float desempilha(elpilha** end_em_lista_pilha, lista_de_pilhas** lista){
+
+	if((*lista)->id == 0){
+		printf("ID 0 é proibido.\n");
+		return -1;
+	}
 
 	if((*lista)->pilha == NULL){
 		printf("Underflow.\n");
@@ -43,7 +53,7 @@ float desempilha(elpilha** end_em_lista_pilha, lista_de_pilhas** lista){
 		x = (*end_em_lista_pilha)->valor;
 		temp = *end_em_lista_pilha;
 		*end_em_lista_pilha = (*end_em_lista_pilha)->ant;
-		printf("End ant = %p\n", (*end_em_lista_pilha)->ant);
+		//printf("End ant = %p\n", (*end_em_lista_pilha)->ant);
 		free(temp);
 		temp = NULL;
 		return x;
@@ -66,14 +76,68 @@ float desempilha(elpilha** end_em_lista_pilha, lista_de_pilhas** lista){
 
 }
 
-void listarNosPilha(elpilha** lista){
-	printf("Valores:");
-	elpilha* backup = *lista;
-		
-	for(; (*lista) != NULL; (*lista) = (*lista)->ant){
-		//if((*lista) != NULL){
-			printf(" %f", (*lista)->valor);
-		//}
+void listarNosPilha(elpilha** pilha){
+	elpilha* backup = *pilha;
+
+	if((*pilha) == NULL){
+		printf("Pilha vazia.\n");
+		return;
 	}
-	*lista = backup;
+	
+	printf("Valores:");
+
+	//a primeira pilha tem ant = null.
+	for(; (*pilha) != NULL; (*pilha) = (*pilha)->ant){
+			printf(" %.2f", (*pilha)->valor);
+	}
+	putchar('\n');
+	*pilha = backup;
+}
+
+int operarPilha(char operador, elpilha** pilha, lista_de_pilhas** noLista) {
+	float resultado;
+
+	if((*pilha)->ant == NULL){
+		printf("Não há valores suficientes.\n");
+		return 0;
+	}
+
+	if(operador == '+'){
+		resultado = (*pilha)->valor + (*pilha)->ant->valor;
+		desempilha(pilha, noLista);
+		desempilha(pilha, noLista);
+		empilha(pilha, noLista);
+		(*pilha)->valor = resultado;
+		return 1;
+	} 
+	else if(operador == '-'){
+		resultado = (*pilha)->valor - (*pilha)->ant->valor;
+		desempilha(pilha, noLista);
+		desempilha(pilha, noLista);
+		empilha(pilha, noLista);
+		(*pilha)->valor = resultado;
+		return 1;
+	}
+	else if(operador == '*'){
+		resultado = (*pilha)->valor * (*pilha)->ant->valor;
+		desempilha(pilha, noLista);
+		desempilha(pilha, noLista);
+		empilha(pilha, noLista);
+		(*pilha)->valor = resultado;
+		return 1;
+	}
+	else if(operador == '/'){
+		resultado = (*pilha)->valor / (*pilha)->ant->valor;
+		desempilha(pilha, noLista);
+		desempilha(pilha, noLista);
+		empilha(pilha, noLista);
+		(*pilha)->valor = resultado;
+		return 1;
+	} 
+	else {
+		printf("Operação inválida.\n");
+		return 2;
+	}
+
+
 }
