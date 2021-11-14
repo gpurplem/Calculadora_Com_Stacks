@@ -11,6 +11,12 @@ void empilha(elpilha** top){
 	elpilha* temp;
 	temp = (elpilha*) malloc (sizeof(elpilha));
 	temp->ant = *top;
+
+	printf("Digite o valor.");
+	int valor_temp;
+	scanf("%d", &valor_temp);
+	temp->valor = valor_temp;
+
 	*top = temp;
 }
 
@@ -21,7 +27,7 @@ float desempilha(elpilha** top){
 		x = (*top)->valor;
 		temp = *top;
 		*top = (*top)->ant;
-		free(temp);
+		//Aqui vai liberar esse lugar!
 		return x;
 	}
 	
@@ -45,9 +51,9 @@ void addLista(lista_de_pilhas** lista){
 	(*lista) = backup;
 }
 
-int listaVazia(lista_de_pilhas** lista){
+/*int listaVazia(lista_de_pilhas** lista){
 	return (*lista)->prox == NULL;
-}
+}*/
 
 void listar(lista_de_pilhas** lista){
 	lista_de_pilhas* backup = *lista;
@@ -78,12 +84,19 @@ void encontrar(lista_de_pilhas** lista){
 	int id_temp;
 	scanf("%d", &id_temp);
 
-	lista_de_pilhas* backup = *lista;
-	lista_de_pilhas* anterior;
-
 	for( ; (*lista)->id != id_temp; (*lista) = (*lista)->prox);
+}
 
-	
+void listarValor(elpilha** lista){
+	printf("Valores:");
+	elpilha* backup = *lista;
+		
+	for(; (*lista) != NULL; (*lista) = (*lista)->ant){
+		//if((*lista) != NULL){
+			printf(" %f", (*lista)->valor);
+		//}
+	}
+	*lista = backup;
 }
 
 
@@ -102,7 +115,8 @@ int main(){
 	int menu;
 	do{
 		printf("1  - Criar.\n");
-		printf("2  - Listar.\n");
+		printf("2  - Listar listas.\n");
+		printf("0  - Listar valores.\n");
 		printf("3  - Remover.\n");
 		printf("4  - Empilhar valor.\n");
 		printf("5  - Desempilhar.\n");
@@ -120,11 +134,13 @@ int main(){
 			case 1: addLista(&lista_inicio); break;
 			case 2: listar(&lista_inicio); break;
 			case 3: remover(&lista_inicio); break;
-			case 4: empilha(&lista_inicio->pilha); break;
+			case 4: temp = lista_inicio; encontrar(&temp); empilha(&temp->pilha); break;
+			case 0: temp = lista_inicio; encontrar(&temp); listarValor(&(temp->pilha)); break;
+
 		}
 
 
-	}while(menu > 0 && menu <  14);
+	}while(menu >= 0 && menu <  14);
 
 
 }
