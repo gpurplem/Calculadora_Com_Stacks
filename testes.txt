@@ -1,0 +1,102 @@
+	//Pegar o título:
+	printf("Posição A1 %ld\n", ftell(arquivo));
+	//fscanf(arquivo, "%c", &pare);
+	fscanf(arquivo, "%s", stringLixo);
+	fscanf(arquivo, "%s", stringLixo2);
+	fscanf(arquivo, "%d", &ID);
+	//printf("pare = %c\n", pare);
+	printf("stringLixo = %s\n", stringLixo);
+	printf("stringLixo2 = %s\n", stringLixo2);
+	printf("ID = %d\n", ID);
+	printf("Posição A1 %ld\n", ftell(arquivo));
+
+	//Pegar os números
+	printf("Posição A2 %ld\n", ftell(arquivo));
+	fscanf(arquivo, "%f", &valor);
+	printf("valor = %f\n", valor);
+	printf("Posição A2 %ld\n", ftell(arquivo));
+
+	printf("Posição A3 %ld\n", ftell(arquivo));
+	fscanf(arquivo, "%f", &valor);
+	printf("valor = %f\n", valor);
+	printf("Posição A3 %ld\n", ftell(arquivo));
+
+	printf("Posição A4 %ld\n", ftell(arquivo));
+	scan = fscanf(arquivo, "%f", &valor);
+	printf("scan = %d\n", scan);
+	printf("valor = %f\n", valor);
+	printf("Posição A4 %ld\n", ftell(arquivo));
+
+	//Aqui é o x: se não existe o valor, ele fica rodando
+	//O cursor não move! Variavel valor não é alterada.
+	printf("Posição A5 %ld\n", ftell(arquivo));
+	scan = fscanf(arquivo, "%f", &valor);
+	printf("scan = %d\n", scan);
+	printf("valor = %f\n", valor);
+	printf("Posição A5 %ld\n", ftell(arquivo));
+
+	//mandar ler um char
+	printf("Posição A6 %ld\n", ftell(arquivo));
+	scan = fscanf(arquivo, "%c", &pare);
+	printf("scan = %d\n", scan);
+	printf("pare = %c\n", pare);
+	printf("Posição A6 %ld\n", ftell(arquivo));
+
+	//Repetindo com a segunda pilha
+	printf("Posição A1 %ld\n", ftell(arquivo));
+	//fscanf(arquivo, "%c", &pare);
+	fscanf(arquivo, "%s", stringLixo);
+	fscanf(arquivo, "%s", stringLixo2);
+	fscanf(arquivo, "%d", &ID);
+	//printf("pare = %c\n", pare);
+	printf("stringLixo = %s\n", stringLixo);
+	printf("stringLixo2 = %s\n", stringLixo2);
+	printf("ID = %d\n", ID);
+	printf("Posição A1 %ld\n", ftell(arquivo));
+
+	//Pegar os números
+	printf("Posição A2 %ld\n", ftell(arquivo));
+	fscanf(arquivo, "%f", &valor);
+	printf("valor = %f\n", valor);
+	printf("Posição A2 %ld\n", ftell(arquivo));
+
+	printf("Posição A2 %ld\n", ftell(arquivo));
+	fscanf(arquivo, "%f", &valor);
+	printf("valor = %f\n", valor);
+	printf("Posição A2 %ld\n", ftell(arquivo));
+
+	//Tem que tentar ler MAIS UMA VEZ antes de ir pro char.
+	//Aí o ponteiro fica no lugar certo.
+	printf("Posição A2 %ld\n", ftell(arquivo));
+	fscanf(arquivo, "%f", &valor);
+	printf("valor = %f\n", valor);
+	printf("Posição A2 %ld\n", ftell(arquivo));
+
+	//mandar ler um char
+	printf("Posição A6 %ld\n", ftell(arquivo));
+	scan = fscanf(arquivo, "%c", &pare);
+	printf("scan = %d\n", scan);
+	printf("pare = %c\n", pare);
+	printf("Posição A6 %ld\n", ftell(arquivo));
+	
+/*	//Tem que tentar ler MAIS UMA VEZ antes de ir pro char.
+	//Aí o ponteiro fica no lugar certo.
+	printf("Posição A2 %ld\n", ftell(arquivo));
+	fscanf(arquivo, "%f", &valor);
+	printf("valor = %f\n", valor);
+	printf("Posição A2 %ld\n", ftell(arquivo));*/
+
+	//mandar ler um char (aqui agora pega o Z)
+	printf("Posição A6 %ld\n", ftell(arquivo));
+	scan = fscanf(arquivo, "%s", stringLixo);
+	printf("scan = %d\n", scan);
+	printf("stringLixo = %s\n", stringLixo);
+	printf("Posição A6 %ld\n", ftell(arquivo));
+
+	//mandar ler um char (aqui agora pega o Z)
+	//Bingo: use string ao invés de char.
+	printf("Posição A6 %ld\n", ftell(arquivo));
+	scan = fscanf(arquivo, "%s", stringLixo);
+	printf("scan = %d\n", scan);
+	printf("stringLixo = %s\n", stringLixo);
+	printf("Posição A6 %ld\n", ftell(arquivo));
