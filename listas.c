@@ -1,7 +1,6 @@
 #include "headers.h"
    
 //Cria nó na lista e incrementa o ID.
-//Apagando ID 2, não é reutilizado mais.
 void novoNoLista(lista_de_pilhas** lista){
 	lista_de_pilhas* backup = *lista;
 	for( ; (*lista)->prox != NULL; (*lista) = (*lista)->prox);
@@ -79,8 +78,3 @@ int encontrarNoListaAutomatico(lista_de_pilhas** lista, int id_temp){
 	} 
 	else return ( (*lista)->id == id_temp );
 }
-
-/*elpilha** encontrarEnderecoNoListaAutomatico(lista_de_pilhas** lista, int id_temp){
-	for( ; (*lista)->id != id_temp && (*lista)->prox != NULL; (*lista) = (*lista)->prox);
-	return &(*lista)->pilha;
-}*/

@@ -31,6 +31,7 @@ int main(){
 		printf("13 - Listar stacks descrescente\n");
 		printf("14 - Backup\n");
 		printf("15 - Restaurar backup\n");
+		printf("16 - Sair\n");
     printf(VERDE "****************************\n" RESET);
     printf(AMARELO "\nDigite a opção desejada:");
 		
@@ -188,7 +189,6 @@ int main(){
 				case 12:
 					noListaTemp = lista;
 					if(encontrarNoLista(&noListaTemp)){
-						//printf("lista->pilha->valor = %f\n", noListaTemp->pilha->valor);
 						listarStackCrescente(noListaTemp);
 					}
 					else printf(VERMELHO"ERROR: ID não encontrado.\n\n"RESET);
@@ -197,7 +197,6 @@ int main(){
 				case 13:
 				noListaTemp = lista;
 				if(encontrarNoLista(&noListaTemp)){
-					//printf("lista->pilha->valor = %f\n", noListaTemp->pilha->valor);
 					listarStackDecrescente(noListaTemp);
 				}
 				else printf(VERMELHO"ERROR: ID não encontrado.\n\n"RESET);

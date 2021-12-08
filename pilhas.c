@@ -47,6 +47,31 @@ void empilhaVazio(elpilha** pilha, lista_de_pilhas** lista){
 	(*lista)->pilha = temp;
 }
 
+void empilhaVazioInvertido(elpilha** pilha, lista_de_pilhas** lista){
+	int valor_temp;
+	elpilha* temp;
+	elpilha* backupPilha;
+	temp = (elpilha*)malloc(sizeof(elpilha));
+
+	if((*lista)->id == 0){
+		printf(VERMELHO"\nERROR: ID 0 é proibido.\n\n"RESET);
+		return;
+	}
+	
+	if((*lista)->pilha == NULL){
+		temp->ant = NULL;	
+		(*lista)->pilha = temp;
+	}
+	else{
+		backupPilha = (*lista)->pilha;
+		for(; (*pilha)->ant != NULL; (*pilha) = (*pilha)->ant);
+		(*pilha)->ant = temp;
+		temp->ant = NULL;
+		(*lista)->pilha = backupPilha;
+	}	
+	temp->valor = 0;
+}
+
 //Cria uma stack, empilha com valos recebido.
 void empilhaResultadoOperacao(elpilha** pilha, lista_de_pilhas** lista, float resultado){
 
@@ -184,7 +209,6 @@ void reduzirPilha(char operador, elpilha** pilha, lista_de_pilhas** noLista) {
 	while( operarPilha(operador, pilha, noLista) ){
 	}
 	printf(AZUL"\nREDUÇÃO COMPLETA.\n\n"RESET);
-
 }
 
 void esvaziarPilha(elpilha** pilha, lista_de_pilhas** lista) {

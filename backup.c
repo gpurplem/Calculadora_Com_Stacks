@@ -59,13 +59,19 @@ void backup(lista_de_pilhas* lista){
 	fclose(arquivo);
 }
 
+//Funcionando, mas carrega pilha invertida.
 void restaurar(lista_de_pilhas* lista){
+
+	//Melhorar o esvaziamento da lista!
+	//Se não esvaziar, cada vez que roda, buga.
+	lista->prox = NULL;
 
 	lista_de_pilhas* listaBackup = lista;
 	
 	float valor;
 	char stringLixo[15];
 	int ID;
+	elpilha* backupPilha;
 
 	FILE* arquivo;
 	arquivo = fopen("backup_pilhas.txt", "r");
@@ -80,7 +86,6 @@ void restaurar(lista_de_pilhas* lista){
 		
 		//"z" é sinal de parar.
 		if(strcmp(stringLixo, "z") == 0){
-			printf("leu o z\n");
 			break;
 		}
  
@@ -90,23 +95,36 @@ void restaurar(lista_de_pilhas* lista){
 			fscanf(arquivo, "%s", stringLixo);
 			fscanf(arquivo, "%d", &ID);
 
-			//BUG?
 			novoNoLista(&lista);
+			//Se não mudar o nó antes de carregar o ID, muda o ID0 e buga.
+			encontrarNoListaAutomatico(&lista, 999);
 			lista->id = ID;
 
 			//enquanto conseguir ler um float, execute.
 			//possivel problema aqui: backup dos ponteiros?
 			while(fscanf(arquivo, "%f", &valor)){
-				empilhaVazio(&lista->pilha, &lista);
-				lista->pilha->valor = valor;
-			}
-			lista = listaBackup;
+				
+					
+					if(lista->pilha != NULL){
+						backupPilha = lista->pilha;
+						empilhaVazioInvertido(&lista->pilha, &lista);
+						
+						while(lista->pilha->ant != NULL) lista->pilha = lista->pilha->ant;
+						lista->pilha->valor = valor;
 
+						lista->pilha = backupPilha;
+					} else{
+						empilhaVazioInvertido(&lista->pilha, &lista);
+						lista->pilha->valor = valor;
+					}
+
+			}
+			
 			//Lê o "x".
 			fscanf(arquivo, "%s", stringLixo);
 		}
 
 	}
-	printf("teste\n");
 	lista = listaBackup;
+	fclose(arquivo);
 }

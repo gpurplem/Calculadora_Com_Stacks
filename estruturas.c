@@ -12,10 +12,3 @@ struct lista_de_pilhas {
 };
 
 typedef struct lista_de_pilhas lista_de_pilhas;
-
-/*struct vetorDinamicoInt {
-	int valor;
-	struct vetorDinamicoInt* prox;
-};
-
-typedef struct vetorDinamicoInt vetorDinamicoInt;*/
